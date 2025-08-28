@@ -40,15 +40,26 @@
   </section>
 
   <section>
-    <Transaction
-      v-for="transaction in transactions"
-      :key="transaction.id"
-      :transaction="transaction"
-    />
+    <div
+      v-for="(transactionsOnDay, date) in transactionsGroupedByDate"
+      :key="date"
+      class="mb-10"
+    >
+      <DailyTransactionsSummary
+        :date="date"
+        :transactions="transactionsOnDay"
+      />
+      <Transaction
+        v-for="transaction in transactionsOnDay"
+        :key="transaction.id"
+        :transaction="transaction"
+      />
+    </div>
   </section>
 </template>
 
 <script setup>
+import DailyTransactionsSummary from "~/components/daily-transactions-summary.vue";
 import { transactionViewOptions } from "~/utils/constants";
 const selectedView = ref(transactionViewOptions[1]);
 
