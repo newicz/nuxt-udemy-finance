@@ -8,6 +8,8 @@
 </template>
 
 <script setup>
+const colorMode = useColorMode();
+colorMode.preference = "dark";
 useHead({
   link: [
     {

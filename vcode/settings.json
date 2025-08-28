@@ -1,0 +1,76 @@
+{
+  "cSpell.diagnosticLevel": "Hint",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#f8f8f2",
+    "editorIndentGuide.activeBackground": "#f8f8f2",
+    "editorIndentGuide.background": "#44475a"
+  },
+  "files.autoSave": "afterDelay",
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "redhat.telemetry.enabled": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "security.workspace.trust.untrustedFiles": "open",
+  "extensions.ignoreRecommendations": true,
+  "godotTools.lsp.serverPort": 6005,
+  "godotTools.editorPath.godot4": "C:\\Program Files\\Godot\\Godot_v4.2.2-stable\\Godot_v4.2.2-stable_win64.exe",
+  "docker.extension.enableComposeLanguageServer": false,
+  "css.lint.unknownAtRules": "ignore",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.glyphMargin": false,
+  "editor.folding": false,
+  "editor.lineNumbers": "off",
+  "editor.minimap.enabled": false,
+  "editor.scrollbar.vertical": "hidden",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.verticalScrollbarSize": 0,
+  "editor.scrollbar.horizontalScrollbarSize": 0,
+  "editor.mouseWheelScrollSensitivity": 1,
+  "editor.fastScrollSensitivity": 1,
+  "editor.smoothScrolling": false,
+  "editor.cursorBlinking": "solid",
+  "editor.stickyScroll.enabled": true,
+  "editor.fontFamily": "'CaskaydiaMono Nerd Font Mono'",
+  "editor.fontLigatures": true,
+  "editor.lightbulb.enabled": "off",
+  "breadcrumbs.enabled": false,
+  "editor.guides.bracketPairs": "active",
+  "editor.lineHeight": 2,
+  "editor.fontWeight": "normal",
+  "editor.guides.indentation": false,
+  "editor.guides.highlightActiveIndentation": false,
+  "editor.wordWrapColumn": 50,
+  "editor.wordWrap": "on",
+  "editor.renderControlCharacters": false,
+  "editor.accessibilitySupport": "off",
+  "workbench.colorTheme": "Tokyo Night",
+  "workbench.hover.delay": 500,
+  "workbench.sash.hoverDelay": 500,
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.startupEditor": "none",
+  "workbench.preferredDarkColorTheme": "Tokyo Night",
+  "workbench.layoutControl.enabled": false,
+  "editor.scrollbar.scrollByPage": true,
+  "zenMode.centerLayout": false,
+  "zenMode.fullScreen": true,
+  "workbench.statusBar.visible": false,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.classAttributes": ["class", "ui"],
+  "tailwindCSS.experimental.classRegex": [
+    ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
+}
