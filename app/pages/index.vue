@@ -12,14 +12,14 @@
     <Trend
       color="green"
       title="Income"
-      :amount="4000"
+      :amount="incomeTotal"
       :last-amount="3000"
       :loading="isLoading"
     />
     <Trend
       color="red"
       title="Expense"
-      :amount="4000"
+      :amount="expenseTotal"
       :last-amount="3000"
       :loading="isLoading"
     />
@@ -37,6 +37,26 @@
       :last-amount="7000"
       :loading="isLoading"
     />
+  </section>
+
+  <section class="flex justify-between mb-10">
+    <div>
+      <h2 class="font-2xl font-extrabold">Transactions</h2>
+      <div class="text-gray-500 dark:text-gray-400">
+        You have {{ incomeCount }} incomes and {{ expenseCount }} expenses this
+        period
+      </div>
+    </div>
+    <div>
+      <UButton
+        icon="i-heroicons-plus-circle"
+        color="white"
+        variant="solid"
+        label="Add"
+        @click="isModalOpen = true"
+      />
+      <TransactionModal v-model="isModalOpen" />
+    </div>
   </section>
 
   <section v-if="!isLoading">
@@ -63,24 +83,40 @@
 </template>
 
 <script setup>
-import DailyTransactionsSummary from "~/components/daily-transactions-summary.vue";
 import { transactionViewOptions } from "~/utils/constants";
+
 const selectedView = ref(transactionViewOptions[1]);
-
 const supabase = useSupabaseClient();
-
 const transactions = ref([]);
 const isLoading = ref(true);
+
+const isModalOpen = ref(false);
+
+const income = computed(() =>
+  transactions.value.filter((t) => t.type === "Income")
+);
+
+const expense = computed(() =>
+  transactions.value.filter((t) => t.type !== "Income")
+);
+
+const incomeCount = computed(() => income.value.length);
+const expenseCount = computed(() => expense.value.length);
+
+const incomeTotal = computed(() =>
+  income.value.reduce((sum, transaction) => sum + transaction.amount, 0)
+);
+const expenseTotal = computed(() =>
+  expense.value.reduce((sum, transaction) => sum + transaction.amount, 0)
+);
 
 const fetchTransactions = async () => {
   isLoading.value = true;
   try {
-      const { data, error } = await supabase.from("transactions").select();
+    const { data, error } = await supabase.from("transactions").select();
 
-      if (error) return [];
-
-      console.log("fetching data", data);
-      return data;
+    if (error) return [];
+    return data;
   } finally {
     isLoading.value = false;
   }
