@@ -14,32 +14,32 @@
       title="Income"
       :amount="4000"
       :last-amount="3000"
-      :loading="false"
+      :loading="isLoading"
     />
     <Trend
       color="red"
       title="Expense"
       :amount="4000"
       :last-amount="3000"
-      :loading="false"
+      :loading="isLoading"
     />
     <Trend
       color="green"
       title="Investments"
       :amount="4000"
       :last-amount="5000"
-      :loading="false"
+      :loading="isLoading"
     />
     <Trend
       color="red"
       title="Savings"
       :amount="4000"
       :last-amount="7000"
-      :loading="false"
+      :loading="isLoading"
     />
   </section>
 
-  <section>
+  <section v-if="!isLoading">
     <div
       v-for="(transactionsOnDay, date) in transactionsGroupedByDate"
       :key="date"
@@ -53,8 +53,12 @@
         v-for="transaction in transactionsOnDay"
         :key="transaction.id"
         :transaction="transaction"
+        @deleted="refreshTransactions()"
       />
     </div>
+  </section>
+  <section v-else>
+    <USkeleton class="h-8 w-full mb-2" v-for="i in 4" :key="i" />
   </section>
 </template>
 
@@ -66,14 +70,25 @@ const selectedView = ref(transactionViewOptions[1]);
 const supabase = useSupabaseClient();
 
 const transactions = ref([]);
+const isLoading = ref(true);
 
-const { data, pending } = await useAsyncData("transactions", async () => {
-  const { data, error } = await supabase.from("transactions").select();
+const fetchTransactions = async () => {
+  isLoading.value = true;
+  try {
+      const { data, error } = await supabase.from("transactions").select();
 
-  if (error) return [];
-  return data;
-});
-transactions.value = data.value;
+      if (error) return [];
+
+      console.log("fetching data", data);
+      return data;
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const refreshTransactions = async () =>
+  (transactions.value = await fetchTransactions());
+await refreshTransactions();
 
 const transactionsGroupedByDate = computed(() => {
   let grouped = {};
@@ -90,6 +105,4 @@ const transactionsGroupedByDate = computed(() => {
 
   return grouped;
 });
-
-console.log(transactionsGroupedByDate.value);
 </script>
