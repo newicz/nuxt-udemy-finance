@@ -55,7 +55,7 @@
         label="Add"
         @click="isModalOpen = true"
       />
-      <TransactionModal v-model="isModalOpen" />
+      <TransactionModal v-model="isModalOpen" @saved="refreshTransactions()" />
     </div>
   </section>
 
