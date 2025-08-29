@@ -113,7 +113,10 @@ const expenseTotal = computed(() =>
 const fetchTransactions = async () => {
   isLoading.value = true;
   try {
-    const { data, error } = await supabase.from("transactions").select();
+    const { data, error } = await supabase
+      .from("transactions")
+      .select()
+      .order("created_at", { ascending: false });
 
     if (error) return [];
     return data;
