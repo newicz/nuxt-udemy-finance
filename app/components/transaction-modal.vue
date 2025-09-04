@@ -1,5 +1,8 @@
 <template>
-  <UModal v-model:open="isOpen" title="Add new transaction">
+  <UModal
+    v-model:open="isOpen"
+    :title="isEditing ? 'Edit transaction' : 'Add new transaction'"
+  >
     <template #body>
       <UForm :state="state" :schema="schema" ref="form" @submit="save">
         <UFormField
@@ -10,6 +13,7 @@
         >
           <USelect
             :items="types"
+            :disabled="isEditing"
             placeholder="Select transaction type"
             class="w-full"
             v-model="state.type"
@@ -91,15 +95,31 @@ import { z } from "zod";
 
 const props = defineProps({
   modelValue: Boolean,
+  transaction: {
+    type: Object,
+    required: false,
+  },
 });
 const emit = defineEmits(["update:modelValue", "saved"]);
-const initialState = {
-  type: undefined,
-  amount: 0,
-  created_at: undefined,
-  description: undefined,
-  category: undefined,
-};
+
+const isEditing = computed(() => !!props.transaction);
+
+const initialState = isEditing.value
+  ? {
+      type: props.transaction.type,
+      amount: props.transaction.amount,
+      created_at: props.transaction.created_at.split("T")[0],
+      description: props.transaction.description,
+      category: props.transaction.category,
+    }
+  : {
+      type: undefined,
+      amount: 0,
+      created_at: undefined,
+      description: undefined,
+      category: undefined,
+    };
+
 const state = ref({ ...initialState });
 
 const resetForm = () => {
@@ -146,10 +166,10 @@ const save = async () => {
   try {
     const { error } = await supabase
       .from("transactions")
-      .upsert({ ...state.value });
+      .upsert({ ...state.value, id: props.transaction?.id });
 
     if (!error) {
-      toastSuccess("Transaction saved!")
+      toastSuccess("Transaction saved!");
       isOpen.value = false;
       emit("saved");
       return;
@@ -157,7 +177,7 @@ const save = async () => {
 
     throw error;
   } catch (e) {
-    toastError("Transaction not saved!")
+    toastError("Transaction not saved!");
   } finally {
     isLoading.value = false;
   }

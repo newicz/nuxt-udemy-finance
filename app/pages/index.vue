@@ -70,6 +70,7 @@
         :key="transaction.id"
         :transaction="transaction"
         @deleted="refresh()"
+        @edited="refresh()"
       />
     </div>
   </section>
@@ -80,8 +81,11 @@
 
 <script setup>
 import { transactionViewOptions } from "~/utils/constants";
+const user = useSupabaseUser();
 
-const selectedView = ref(transactionViewOptions[1]);
+const selectedView = ref(
+  user.value.user_metadata?.transaction_view ?? transactionViewOptions[1]
+);
 const isModalOpen = ref(false);
 
 const { current, previous } = useSelectedTimePeriod(selectedView);

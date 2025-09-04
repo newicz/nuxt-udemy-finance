@@ -44,7 +44,7 @@ export const useFetchTransactions = (period) => {
     let grouped = {};
 
     for (const transaction of transactions.value) {
-      const date = new Date(transaction.created_at).toISOString().split("T")[0];
+      const date = transaction.created_at.split("T")[0];
 
       // BUG: date is splitted into wrong date for some reason
       // Check with console.log - toISOString is changing the date

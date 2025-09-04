@@ -15,7 +15,7 @@ export const useAppToast = () => {
       title,
       description,
       icon: "i-heroicons-exclamation-circle",
-      color: "red",
+      color: "error",
     });
   };
 

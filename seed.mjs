@@ -4,7 +4,7 @@ import "dotenv/config";
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  "SECRET_KEY_SUPABASE_API",
+  "SUPABASE_SECRET_SERVICE_KEY",
   {
     auth: { persistSession: false },
   }

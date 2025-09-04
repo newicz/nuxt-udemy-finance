@@ -8,11 +8,11 @@
         :ui="{ item: { disabled: 'cursor-text select-text' }, width: 'w-64' }"
         v-if="user"
       >
-        <UAvatar src="https://github.com/benjamincanac.png" alt="Greg" />
+        <UAvatar :src="url" alt="{{ user.user_metadata?.full_name }}" />
 
         <template #account="{ item }">
           <div class="text-left">
-            <p>Signed in as {{ user.user_metadata.full_name }}</p>
+            <p>Signed in as {{ user.user_metadata?.full_name }}</p>
             <p class="font-medium text-gray-900 dark:text-white">
               {{ user.email }}
             </p>
@@ -26,6 +26,7 @@
 <script setup>
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
+const { url } = useAvatarUrl();
 const items = [
   [
     {
