@@ -3,7 +3,6 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },
@@ -12,5 +11,10 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   supabase: {
     redirect: true,
+  },
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env.BASE_URL ?? "http://localhost:3000",
+    },
   },
 });
